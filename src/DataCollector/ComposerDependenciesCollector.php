@@ -30,7 +30,7 @@ class ComposerDependenciesCollector implements DataCollectorInterface
                 'version' => $package['version'],
                 'description' => $package['description'] ?? '',
                 'homepage' => $package['homepage'] ?? '',
-                'abandoned' => $package['abandoned'] ?? false,
+                'abandoned' => (bool) ($package['abandoned'] ?? false),
             ];
         }
 
