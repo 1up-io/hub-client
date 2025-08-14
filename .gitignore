@@ -1,0 +1,9 @@
+# IDEs
+.idea
+
+# Development
+vendor
+/tools/**/vendor
+
+# Configuration
+.env.local

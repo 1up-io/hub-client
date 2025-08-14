@@ -1,0 +1,17 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    _instanceof:
+        App\Model\DataCollectorInterface:
+            tags:
+                - 'data_collector'
+
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/Model/'
+
+    App\Application:
+        public: true

@@ -1,0 +1,28 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+require __DIR__ . '/../vendor/autoload.php';
+
+use App\Application;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Symfony\Component\Dotenv\Dotenv;
+use Symfony\Component\Config\FileLocator;
+
+$dotEnv = new Dotenv();
+$dotEnv->loadEnv(dirname(__DIR__) . '/.env');
+
+if (getcwd() !== dirname(__DIR__) && file_exists(getcwd() . '/.env')) {
+    $dotEnv->overload(getcwd() . '/.env');
+}
+
+$container = new ContainerBuilder();
+$loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../config'));
+
+$loader->load('services.yaml');
+$container->compile();
+
+$app = $container->get(Application::class);
+$app->run();

@@ -1,0 +1,70 @@
+name: CI
+
+on: push
+
+jobs:
+    check-codestyle:
+        name: Check codestyle
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v4
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: 8.3
+                    extensions: bcmath, dom, fileinfo, filter, gd, hash, intl, json, mbstring, mysqli, pcre, pdo_mysql, zip, zlib
+                    coverage: none
+
+                env:
+                    COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+            -   name: Install PHP dependencies
+                run: composer install --no-interaction --no-progress
+
+            -   name: Check PHP codestyle
+                run: composer run ecs
+
+            -   name: Run static analysis
+                run: composer run phpstan
+
+    check-composer-requirements:
+        name: Check Composer Requirements
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v4
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: 8.4
+                    extensions: bcmath, dom, fileinfo, filter, gd, hash, intl, json, mbstring, mysqli, pcre, pdo_mysql, zip, zlib
+                    coverage: none
+
+                env:
+                    COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+            -   name: Install the dependencies
+                run: composer install --no-interaction --no-progress
+
+            -   name: Check the dependencies
+                run: composer run require-checker
+
+    security-check:
+        name: PHP Security Check
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v4
+
+            -   name: Setup cache
+                uses: actions/cache@v4
+                id: cache-db
+                with:
+                    path: ~/.symfony/cache
+                    key: db
+
+            -   name: Run security check
+                uses: symfonycorp/security-checker-action@v5
