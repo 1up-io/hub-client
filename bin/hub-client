@@ -24,7 +24,7 @@ use Symfony\Component\Config\FileLocator;
 $dotEnv = new Dotenv();
 $dotEnv->loadEnv(dirname(__DIR__) . '/.env');
 
-// Config file next to the composer.json that installes this cli
+// Config file next to the composer.json that installs this CLI
 if (file_exists(__DIR__ . '/../../../../.env')) {
     $dotEnv->overload(__DIR__ . '/../../../../.env');
 }
