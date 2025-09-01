@@ -6,6 +6,7 @@ namespace App\DataCollector;
 
 use App\Filesystem\FileReader;
 use App\Model\DataCollectorInterface;
+use Siketyan\YarnLock\MalformedYarnLockException;
 use Siketyan\YarnLock\YarnLock;
 
 class YarnDependenciesCollector implements DataCollectorInterface
@@ -25,8 +26,12 @@ class YarnDependenciesCollector implements DataCollectorInterface
 
         $deps = [];
 
-        $contents = YarnLock::toArray($contents);
-        $contents = YarnLock::packagesFromArray($contents);
+        try {
+            $contents = YarnLock::toArray($contents);
+            $contents = YarnLock::packagesFromArray($contents);
+        } catch (MalformedYarnLockException) {
+            return null;
+        }
 
         foreach ($contents as $package) {
             $deps[] = [
