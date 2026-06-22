@@ -14,7 +14,7 @@ class PhpVersionCollector implements DataCollectorInterface
     ) {
     }
 
-    public function collect(string $directory): ?array
+    public function collect(string $directory, string $environment): ?array
     {
         $version = $this->readFromDotFile($directory) ?? $this->readFromPlatform($directory);
 

@@ -10,7 +10,6 @@ return new Configuration()
         [
             'symfony/config',
             'symfony/dotenv',
-            'symfony/yaml',
         ],
         [ErrorType::UNUSED_DEPENDENCY]
     )

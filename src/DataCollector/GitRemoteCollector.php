@@ -9,7 +9,7 @@ use Symfony\Component\Process\Process;
 
 class GitRemoteCollector implements DataCollectorInterface
 {
-    public function collect(string $directory): ?array
+    public function collect(string $directory, string $environment): ?array
     {
         $process = new Process(['git', 'config', '--get', 'remote.origin.url'], cwd: $directory);
         $process->run();

@@ -6,5 +6,5 @@ namespace App\Model;
 
 interface DataCollectorInterface
 {
-    public function collect(string $directory): ?array;
+    public function collect(string $directory, string $environment): ?array;
 }
