@@ -16,7 +16,7 @@ class YarnDependenciesCollector implements DataCollectorInterface
     ) {
     }
 
-    public function collect(string $directory): ?array
+    public function collect(string $directory, string $environment): ?array
     {
         $contents = $this->fileReader->read($directory, 'yarn.lock');
 

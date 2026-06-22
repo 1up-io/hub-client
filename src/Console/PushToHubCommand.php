@@ -37,9 +37,12 @@ class PushToHubCommand extends Command
 
         $result = [];
 
+        /** @var string $environment */
+        $environment = $input->getArgument('environment');
+
         /** @var DataCollectorInterface $collector */
         foreach ($this->collectors as $collector) {
-            $collectorResult = $collector->collect($directory);
+            $collectorResult = $collector->collect($directory, $environment);
 
             if (null === $collectorResult) {
                 continue;
@@ -48,7 +51,7 @@ class PushToHubCommand extends Command
             $result = [...$result, ...$collectorResult];
         }
 
-        $data = ['project' => $input->getArgument('project'), 'environment' => $input->getArgument('environment'), ...$result];
+        $data = ['project' => $input->getArgument('project'), 'environment' => $environment, ...$result];
 
         if ($output->isVerbose()) {
             $output->writeln('<info>Pushing to Hub</info>');
