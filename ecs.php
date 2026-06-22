@@ -7,18 +7,14 @@ use PhpCsFixer\Fixer\Operator\ConcatSpaceFixer;
 use Symplify\EasyCodingStandard\ValueObject\Set\SetList;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
 
-return static function (ECSConfig $ecsConfig): void {
-    $ecsConfig->paths([__DIR__ . '/src']);
-
-    $ecsConfig->ruleWithConfiguration(ConcatSpaceFixer::class, [
+return ECSConfig::configure()
+    ->withPaths([__DIR__ . '/src'])
+    ->withConfiguredRule(ConcatSpaceFixer::class, [
         'spacing' => 'one'
-    ]);
-
-    $ecsConfig->skip([MethodArgumentSpaceFixer::class]);
-
-    $ecsConfig->sets([
-        // run and fix, one by one
+    ])
+    ->withSkip([MethodArgumentSpaceFixer::class])
+    ->withSets([
         SetList::PSR_12,
         SetList::CLEAN_CODE,
-    ]);
-};
+    ])
+;

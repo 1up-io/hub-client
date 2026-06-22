@@ -58,6 +58,7 @@ class AuthentificationFactory
 
     private function getKeyLocation(): string
     {
+        /** @var string $explicitKey */
         $explicitKey = $_ENV['HUB_CLIENT_SIGNING_KEY'];
 
         if ($explicitKey) {

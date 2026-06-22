@@ -1,0 +1,8 @@
+{
+    "license": "proprietary",
+    "type": "project",
+    "php": ">=8.4",
+    "require": {
+        "shipmonk/composer-dependency-analyser": "^1.8"
+    }
+}

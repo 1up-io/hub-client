@@ -15,6 +15,7 @@ class DataSender
 
     public function send(array $data): void
     {
+        /** @var string $endpoint */
         $endpoint = $_ENV['HUB_CLIENT_ENDPOINT'];
 
         $client = HttpClient::create();
