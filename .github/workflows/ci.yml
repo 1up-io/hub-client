@@ -13,7 +13,7 @@ jobs:
             -   name: Setup PHP
                 uses: shivammathur/setup-php@v2
                 with:
-                    php-version: 8.3
+                    php-version: 8.4
                     extensions: bcmath, dom, fileinfo, filter, gd, hash, intl, json, mbstring, mysqli, pcre, pdo_mysql, zip, zlib
                     coverage: none
 
@@ -50,7 +50,7 @@ jobs:
                 run: composer install --no-interaction --no-progress
 
             -   name: Check the dependencies
-                run: composer run require-checker
+                run: composer run dependency-analyser
 
     security-check:
         name: PHP Security Check
