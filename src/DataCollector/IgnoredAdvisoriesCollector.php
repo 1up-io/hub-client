@@ -23,7 +23,7 @@ class IgnoredAdvisoriesCollector implements DataCollectorInterface
         }
 
         return [
-            'ignoredAdvisories' => $contents['config']['audit']['ignore'] ?? [],
+            'ignoredAdvisories' => $contents['config']['policy']['advisories']['ignore'] ?? [],
         ];
     }
 }
