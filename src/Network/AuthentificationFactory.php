@@ -10,22 +10,26 @@ class AuthentificationFactory
 {
     public function getHeaders(): array
     {
-        $key = $this->getKeyLocation();
-
-        $message = $this->createMessage();
-        $signature = $this->getSignature($key, $message);
-        $fingerprint = $this->getFingerPrint($key);
-
+        $headers = [];
         $legacyKey = $_ENV['HUB_CLIENT_LEGACY_AUTHENTICATION_KEY'];
-
-        $headers = [
-            'Message' => $message,
-            'Fingerprint' => $fingerprint,
-            'Signature' => $signature,
-        ];
 
         if ($legacyKey) {
             $headers['Authorization'] = $legacyKey;
+        }
+
+        try {
+            $key = $this->getKeyLocation();
+
+            $message = $this->createMessage();
+            $signature = $this->getSignature($key, $message);
+            $fingerprint = $this->getFingerPrint($key);
+
+            $headers = [...$headers, ...[
+                'Message' => $message,
+                'Fingerprint' => $fingerprint,
+                'Signature' => $signature,
+            ]];
+        } catch (\RuntimeException) {
         }
 
         return $headers;
